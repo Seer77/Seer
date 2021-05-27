@@ -3,7 +3,7 @@
 
 using namespace std;
 enum TicTacToeCell { t_empty, cross, zero };//Задание 2.2
-
+const int SIZE = 3;
 void task1()// Задание 2.1
 {
 	char a = 'g';
@@ -18,19 +18,31 @@ void task1()// Задание 2.1
 
 void task3()
 {
-	TicTacToeCell arr[3][3] = { t_empty };//Задание 2.3
-	cout << arr[0][0] << " " << arr[0][1] << " " << arr[0][2] << " " << endl;//Проверка инициализации массива
-	cout << arr[1][0] << " " << arr[1][1] << " " << arr[1][2] << " " << endl;
-	cout << arr[2][0] << " " << arr[2][1] << " " << arr[2][2] << " " << endl;
+	TicTacToeCell arr[SIZE][SIZE] = { t_empty };//Задание 2.3
+	for (int y = 0; y < SIZE; y++)
+	{
+		for (int x = 0; x < SIZE; x++)
+		{
+			cout << arr[y][x] <<" ";
+		}
+		cout << endl;
+	}
+	
 };
+
+struct Player
+{
+	TicTacToeCell tip;
+	char Name[255];
+};
+
 
 struct TicTacToe//задание 2.4
 {
-	TicTacToeCell arr[3][3];
+	TicTacToeCell arr[SIZE][SIZE];
 	bool Gamefinished;
-	TicTacToeCell Player1, Player2;
-	long idPlayer1, idPlayer2;
-	const unsigned int Fieldsize = 3;
+	Player Player1, Player2;
+	const unsigned int Fieldsize = SIZE;
 };
 
 union myVariantdata//Задание 2.5
@@ -47,6 +59,19 @@ struct myVariant {//Задание 2.5
 	unsigned int isFloat : 1;
 };
 
+void Print(const myVariant& var)
+{
+	if (var.isChar == 1)
+		cout << var.data.myChar;
+	
+	else if (var.isInt == 1)
+	
+		cout << var.data.myInt << endl;
+	
+	else cout << var.data.myFloat;
+}
+
+
 
 int main()
 {
@@ -59,27 +84,11 @@ int main()
 	var.isChar = 0;
 	var.isInt = 1;
 	var.isFloat = 0;
-	if (var.isChar == 1)//как закинуть в функцию пока не понимаю (как прописать входящие данные для цикла), поэтому использую здесь дважды
-	{
-		cout << var.isChar;
-	}
-	else if (var.isInt == 1)
-	{
-		cout << var.data.myInt << endl;
-	}
-	else cout << var.isFloat;
+	Print(var);
 
 	var.data.myChar = 'f';
 	var.isChar = 1;
 	var.isInt = 0;
 	var.isFloat = 0;
-	if (var.isChar == 1)
-	{
-		cout << var.data.myChar <<endl;
-	}
-	else if (var.isInt == 1)
-	{
-		cout << var.isInt;
-	}
-	else cout << var.isFloat;
+	Print(var);
 }
