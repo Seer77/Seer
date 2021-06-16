@@ -1,0 +1,15 @@
+id employee: 213513
+Age employee: 25
+Salary employee: 150000
+Name employee: Ser Ign
+
+id employee: 213514
+Age employee: 32
+Salary employee: 130000
+Name employee: Ser Fad
+
+id employee: 213515
+Age employee: 44
+Salary employee: 110000
+Name employee: Ser Som
+
