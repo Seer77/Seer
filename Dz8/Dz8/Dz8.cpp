@@ -185,7 +185,7 @@ Coord getAICoord(Field& f)
 	{
 		const size_t index = getRandomNum(0, 1000) % num;
 		return arr[index];
-
+	}
 	return{ 1,1 };
 }
 
@@ -199,7 +199,7 @@ Progress getWon(const Field& f)
 			{
 				return WON_AI;
 			}
-			else (f.ppField[y][0] == f.human)
+			else if (f.ppField[y][0] == f.human)
 			{
 				return WON_HUMAN;
 			}
@@ -214,7 +214,7 @@ Progress getWon(const Field& f)
 			{
 				return WON_AI;
 			}
-			else (f.ppField[0][x] == f.human)
+			else if(f.ppField[0][x] == f.human)
 			{
 				return WON_HUMAN;
 			}
@@ -229,7 +229,7 @@ Progress getWon(const Field& f)
 		}
 		else if (f.ppField[0][0] = f.human)
 		{
-			return WIN_HUMAN;
+			return WON_HUMAN;
 		}
 	}
 
@@ -241,7 +241,7 @@ Progress getWon(const Field& f)
 		}
 		else if (f.ppField[1][1] = f.human)
 		{
-			return WIN_HUMAN;
+			return WON_HUMAN;
 		}
 	}
 
@@ -251,7 +251,7 @@ bool draw = true;
 	{
 		for (size_t x = 0; x < f.SIZE; x++)
 		{
-			if (f.ppField[y][x] = EMPTY)
+			if (f.ppField[y][x] == EMPTY)
 			{
 				draw = false;
 				break;
@@ -265,7 +265,7 @@ bool draw = true;
 	}
 	if (draw)
 	{
-		retirn DRAW;
+		return DRAW;
 	}
 	return IN_PROGRESS;
 }
