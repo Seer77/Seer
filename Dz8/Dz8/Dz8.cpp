@@ -134,8 +134,44 @@ Coord getHumanCoord(Field& f)
 	return c;
 }
 
+Progress getWon(const Field& f);
+
 Coord getAICoord(Field& f)
 {
+	for (size_t y = 0; y < f.SIZE; y++)
+	{
+		for (size_t x = 0; x < f.SIZE; x++)
+		{
+			if (f.ppField[y][x] == EMPTY)
+			{
+				f.ppField[y][x] = f.ai;
+				if (getWon(f) == WON_AI)
+				{
+					f.ppField[y][x] = EMPTY;
+					return{ y , x };
+				}
+				f.ppField[y][x] = EMPTY;
+			}
+		}
+	}
+
+	for (size_t y = 0; y < f.SIZE; y++)
+	{
+		for (size_t x = 0; x < f.SIZE; x++)
+		{
+			if (f.ppField[y][x] == EMPTY)
+			{
+				f.ppField[y][x] = f.human;
+				if (getWon(f) == WON_HUMAN)
+				{
+					f.ppField[y][x] = EMPTY;
+					return{ y , x };
+				}
+				f.ppField[y][x] = EMPTY;
+			}
+		}
+	}
+
 	if (f.ppField[1][1] == EMPTY)
 	{
 		return { 1,1 };
@@ -148,7 +184,7 @@ Coord getAICoord(Field& f)
 	}
 	if (f.ppField[2][2] == EMPTY)
 	{
-		arr[num++] = {2,2 };
+		arr[num++] = { 2,2 };
 	}
 	if (f.ppField[0][2] == EMPTY)
 	{
@@ -193,7 +229,7 @@ Progress getWon(const Field& f)
 {
 	for (size_t y = 0; y < f.SIZE; y++)
 	{
-		if (f.ppField[y][0] == f.ppField[y][1] && f.ppField[y][0] == f.ppField[y][2])
+		if ((f.ppField[y][0] == f.ppField[y][1]) && (f.ppField[y][0] == f.ppField[y][2]))
 		{
 			if (f.ppField[y][0] == f.ai)
 			{
@@ -208,7 +244,7 @@ Progress getWon(const Field& f)
 
 	for (size_t x = 0; x < f.SIZE; x++)
 	{
-		if (f.ppField[0][x] == f.ppField[1][x] && f.ppField[0][x] == f.ppField[2][x])
+		if ((f.ppField[0][x] == f.ppField[1][x]) && (f.ppField[0][x] == f.ppField[2][x]))
 		{
 			if (f.ppField[0][x] == f.ai)
 			{
@@ -221,25 +257,25 @@ Progress getWon(const Field& f)
 		}
 	}
 
-	if (f.ppField[0][0] == f.ppField[1][1] && f.ppField[0][0] == f.ppField[2][2])
+	if ((f.ppField[0][0] == f.ppField[1][1]) && (f.ppField[0][0] == f.ppField[2][2]))
 	{
 		if (f.ppField[0][0] == f. ai)
 		{
 			return WON_AI;
 		}
-		else if (f.ppField[0][0] = f.human)
+		else if (f.ppField[0][0] == f.human)
 		{
 			return WON_HUMAN;
 		}
 	}
 
-	if (f.ppField[2][0] == f.ppField[1][1] && f.ppField[1][1] == f.ppField[0][2])
+	if ((f.ppField[2][0] == f.ppField[1][1]) && (f.ppField[1][1] == f.ppField[0][2]))
 	{
 		if (f.ppField[1][1] == f.ai)
 		{
 			return WON_AI;
 		}
-		else if (f.ppField[1][1] = f.human)
+		else if (f.ppField[1][1] == f.human)
 		{
 			return WON_HUMAN;
 		}
@@ -309,18 +345,13 @@ int main()
 		}
 
 		f.turn++;
-
 		clearScr();
 		printField(f);
-
 		f.progress = getWon(f);
 
 	} while (f.progress == IN_PROGRESS);
 
-	
-
 	congrats(f.progress);
-
 	deinitField(f);
 
 	//return 0;
